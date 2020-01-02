@@ -21,8 +21,10 @@ module.exports = {
             ctx.meta.authorization = req.headers["authorization"];
         }
       }
-    ]
-
+    ],
     // Serve assets from "public" folder
+    assets: {
+      folder: "public"
+    }
   }
 };

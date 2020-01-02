@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script type="text/javascript" src="./pagseguro.directpayment.js"></script>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="senderhash">
+      botao</button
+    >>
+  </body>
+
+  <script>
+    let btn = document.querySelector("#senderhash");
+
+    PagSeguroDirectPayment.setSessionId("c4cdb3fd06e74e8fa786a756364269c0");
+
+    btn.onclick = () => {
+      PagSeguroDirectPayment.onSenderHashReady(response => {
+        if (response.status == "error") {
+          console.log(response.message);
+          return false;
+        }
+        var hash = response.senderHash; //Hash estará disponível nesta variável.
+        console.log(hash);
+      });
+    };
+  </script>
+</html>

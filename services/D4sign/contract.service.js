@@ -33,18 +33,18 @@ module.exports = {
         query: { id: ctx.params.userId }
       });
 
-      const { id, name, folder_uuid } = user[0];
+      const { id, name, folder_uuid, name_document } = user[0];
 
       const response = await axios.post(url, {
         templates: {
           MTQ3: {
             nome_comprador: name,
-            nome_produto: ctx.params.variables.nome_produto,
-            nome_empresa: "Hubtec"
+            nome_empresa: "Autocore",
+            nome_produto: "esp-32"
           }
         },
-        name_document: "Documento",
-        uuid_folder: folder_uuid
+        uuid_folder: folder_uuid,
+        name_document
       });
 
       await ctx.call("historics.create", {
@@ -60,14 +60,15 @@ module.exports = {
       });
 
       const data = await ctx.call("historic.index", { user_id: user[0].id });
+
       const url = encodeURI(
-        `${config.url}/documents/${data.document_uuid}/createlist?tokenAPI=${config.token}&cryptKey=${config.crypt}`
+        `${config.url}documents/${data.document_uuid}/createlist?tokenAPI=${config.token}&cryptKey=${config.crypt}`
       );
 
       const response = await axios.post(url, {
         signers: [
           {
-            email: user.email,
+            email: "beroni.magalhaes@hubtec.io",
             act: "1",
             foreign: "0",
             certificadoicpbr: "0",
@@ -84,6 +85,24 @@ module.exports = {
 
       return response.data;
     },
-    async sendToSign(ctx) {}
+    async sendToSign(ctx) {
+      const user = await ctx.call("users.find", {
+        query: { id: 1 }
+      });
+
+      const data = await ctx.call("historic.index", { user_id: user[0].id });
+
+      const url = encodeURI(
+        `${config.url}documents/${data.document_uuid}/sendtosigner?tokenAPI=${config.token}&cryptKey=${config.crypt}`
+      );
+
+      const response = await axios.post(url, {
+        message: "Assina ai",
+        skip_email: "1",
+        workflow: "0"
+      });
+
+      return response.data;
+    }
   }
 };
