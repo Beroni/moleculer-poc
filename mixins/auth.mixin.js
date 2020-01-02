@@ -1,4 +1,4 @@
-const dotenv = require("dotenv").config();
+const config = require("../../src/config/auth");
 const jwt = require("jsonwebtoken");
 const { promisify } = require("util");
 
@@ -9,10 +9,7 @@ module.exports = {
 
       const [, token] = authHeader.split(" ");
       try {
-        const decoded = await promisify(jwt.verify)(
-          token,
-          process.env.SECRET_KEY
-        );
+        const decoded = await promisify(jwt.verify)(token, config.secret);
         ctx.params.userId = decoded.id;
         return;
       } catch (err) {

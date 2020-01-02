@@ -1,5 +1,5 @@
 "use strict";
-
+const JoiValidator = require("./src/helper/validator");
 /**
  * Moleculer ServiceBroker configuration file
  *
@@ -40,7 +40,7 @@ module.exports = {
   serializer: "JSON",
 
   // Number of milliseconds to wait before reject a request with a RequestTimeout error. Disabled: 0
-  requestTimeout: 10 * 1000,
+  requestTimeout: 0,
 
   // Retry policy settings. More info: https://moleculer.services/docs/0.13/fault-tolerance.html#Retry
   retryPolicy: {
@@ -113,9 +113,9 @@ module.exports = {
   },
 
   // Enable parameters validation. More info: https://moleculer.services/docs/0.13/validating.html
-  validation: true,
+  validation: false,
   // Custom Validator class for validation.
-  validator: null,
+  validator: new JoiValidator(),
 
   // Enable metrics function. More info: https://moleculer.services/docs/0.13/metrics.html
   metrics: false,

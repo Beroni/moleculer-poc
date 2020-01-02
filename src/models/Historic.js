@@ -1,10 +1,9 @@
-const { Sequelize, Model } = require("sequelize");
+const { Sequelize } = require("sequelize");
 
 module.exports = {
-  name: "post",
+  name: "historic",
   define: {
-    title: Sequelize.STRING,
-    description: Sequelize.STRING,
+    document_uuid: Sequelize.STRING,
     user_id: {
       type: Sequelize.INTEGER,
       references: {

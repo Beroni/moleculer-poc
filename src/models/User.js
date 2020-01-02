@@ -1,5 +1,4 @@
-const { Sequelize, Model } = require("sequelize");
-const bcrypt = require("bcrypt");
+const { Sequelize } = require("sequelize");
 
 module.exports = {
   name: "user",
@@ -7,6 +6,10 @@ module.exports = {
     name: Sequelize.STRING,
     email: Sequelize.STRING,
     password: Sequelize.STRING,
+    cpf: Sequelize.STRING,
+    country_code: Sequelize.STRING,
+    ddd: Sequelize.STRING,
+    number: Sequelize.STRING,
     folder_uuid: Sequelize.STRING
   },
   options: {

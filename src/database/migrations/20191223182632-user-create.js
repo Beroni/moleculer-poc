@@ -22,6 +22,22 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      cpf: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      country_code: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      ddd: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      number: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       folder_uuid: {
         type: Sequelize.STRING,
         allowNull: false

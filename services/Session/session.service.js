@@ -1,28 +1,33 @@
-const dotenv = require("dotenv").config();
-
+const config = require("../../src/config/auth");
+const Joi = require("joi");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 module.exports = {
   name: "session",
   actions: {
-    async store(ctx) {
-      const { email, password } = ctx.params;
+    store: {
+      params: Joi.object().keys({
+        email: Joi.string().required(),
+        password: Joi.string().required()
+      }),
+      async handler(ctx) {
+        const { email, password } = ctx.params;
 
-      const user = await ctx.call("users.find", { query: { email: email } });
+        const user = await ctx.call("users.find", { query: { email: email } });
 
-      if (await !this.checkPassword(password, user.password))
-        return { error: "Deu merda" };
-      console.log(user);
+        if (await !this.checkPassword(password, user.password))
+          return { error: "Deu merda" };
 
-      const { id, name } = user[0];
+        const { id, name, cpf, country_code, ddd, number } = user[0];
 
-      return {
-        user: { id, name, email },
-        token: jwt.sign({ id }, process.env.SECRET_KEY, {
-          expiresIn: 60 * 60
-        })
-      };
+        return {
+          user: { id, name, email, cpf, country_code, ddd, number },
+          token: jwt.sign({ id }, config.secret, {
+            expiresIn: config.expiresIn
+          })
+        };
+      }
     }
   },
   methods: {
