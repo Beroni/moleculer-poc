@@ -1,29 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <script type="text/javascript" src="./pagseguro.directpayment.js"></script>
+    <script
+      type="text/javascript"
+      src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"
+    ></script>
     <meta charset="UTF-8" />
     <title>Document</title>
   </head>
   <body>
     <button id="senderhash">
-      botao</button
-    >>
+      botao
+    </button>
   </body>
 
   <script>
     let btn = document.querySelector("#senderhash");
 
-    PagSeguroDirectPayment.setSessionId("c4cdb3fd06e74e8fa786a756364269c0");
+    PagSeguroDirectPayment.setSessionId("28031131e8ce4441af428db03fa42ff7");
 
     btn.onclick = () => {
-      PagSeguroDirectPayment.onSenderHashReady(response => {
-        if (response.status == "error") {
-          console.log(response.message);
-          return false;
+      PagSeguroDirectPayment.createCardToken({
+        cardNumber: "4111111111111111", // Número do cartão de crédito
+        brand: "visa", // Bandeira do cartão
+        cvv: "013", // CVV do cartão
+        expirationMonth: "12", // Mês da expiração do cartão
+        expirationYear: "2026", // Ano da expiração do cartão, é necessário os 4 dígitos.
+        success: function(response) {
+          console.log(response);
+        },
+        error: function(response) {
+          // Callback para chamadas que falharam.
+        },
+        complete: function(response) {
+          // Callback para todas chamadas.
         }
-        var hash = response.senderHash; //Hash estará disponível nesta variável.
-        console.log(hash);
       });
     };
   </script>

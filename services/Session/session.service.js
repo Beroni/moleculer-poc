@@ -17,7 +17,7 @@ module.exports = {
         const user = await ctx.call("users.find", { query: { email: email } });
 
         if (await !this.checkPassword(password, user.password))
-          return { error: "Deu merda" };
+          return { error: "error" };
 
         const { id, name, cpf, country_code, ddd, number } = user[0];
 
